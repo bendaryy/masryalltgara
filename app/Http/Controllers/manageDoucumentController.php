@@ -889,7 +889,7 @@ class manageDoucumentController extends Controller
 
     // send to draft
 
-    public function sendDraftData($id)
+    public function sendDraftData($id,Request $request)
     {
         $data = DraftInvoice::find($id)['jsondata'];
         $trnsformed = json_encode($data, JSON_UNESCAPED_UNICODE);
@@ -898,7 +898,7 @@ class manageDoucumentController extends Controller
         $path = 'C:\laragon\www\tasheed\EInvoicing\SourceDocumentJson.json';
         $fullDraftFile = file_get_contents($path);
         $obj = json_decode($fullDraftFile, true);
-        $datetime = $obj['dateTimeIssued'] = date('Y-m-d') . 'T' . date('H:i:s') . 'Z';
+        $datetime = $obj['dateTimeIssued'] = $request->date. "Z";
         $trnsformed = json_encode($obj, JSON_UNESCAPED_UNICODE);
         $myFileToJson = fopen('C:\laragon\www\tasheed\EInvoicing\SourceDocumentJson.json', "w") or die("unable to open file");
         $file = fwrite($myFileToJson, $trnsformed);

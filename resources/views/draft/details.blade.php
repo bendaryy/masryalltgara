@@ -115,8 +115,8 @@
                                 <td style="padding: 20px">تاريخ إرسال الفاتورة</td>
                                 <td style="padding: 20px">
                                     @isset($showInvoice['dateTimeIssued'])
-                                    {{ Carbon\Carbon::parse($showInvoice['dateTimeIssued'])->format('d-m-Y') }}
-                                        @else
+                                        {{ Carbon\Carbon::parse($showInvoice['dateTimeIssued'])->format('d-m-Y') }}
+                                    @else
                                         {{ Carbon\Carbon::parse($draft['dateTimeIssued'])->format('d-m-Y') }}
                                     @endisset
                                 </td>
@@ -269,17 +269,19 @@
 
 
                                 <td style="padding: 20px">{{ $invoice['itemsDiscount'] }}</td>
-                                <td style="padding: 20px">   @if( $invoice['unitValue']['currencySold']  == "EGP")
-                                    {{ $invoice['total'] }}
+                                <td style="padding: 20px">
+                                    @if ($invoice['unitValue']['currencySold'] == 'EGP')
+                                        {{ $invoice['total'] }}
                                     @else
-                                   {{ number_format((float)$invoice['salesTotal']  /  $invoice['unitValue']['currencyExchangeRate'] , 2, '.', '') }}
+                                        {{ number_format((float) $invoice['salesTotal'] / $invoice['unitValue']['currencyExchangeRate'], 2, '.', '') }}
                                     @endif
-                                    {{ $invoice['unitValue']['currencySold'] }}</td>
+                                    {{ $invoice['unitValue']['currencySold'] }}
+                                </td>
                             </tr>
 
-                              @php
-                                $currency =  $invoice['unitValue']['currencySold'];
-                                $foriegnCurrencyExchangeRate =  $invoice['unitValue']['currencyExchangeRate'];
+                            @php
+                                $currency = $invoice['unitValue']['currencySold'];
+                                $foriegnCurrencyExchangeRate = $invoice['unitValue']['currencyExchangeRate'];
                             @endphp
                         @endforeach
 
@@ -330,11 +332,12 @@
                             <td>{{ $draft['totalItemsDiscountAmount'] }}</td>
                             <td>{{ $draft['extraDiscountAmount'] }}</td>
                             <td style="color:red;font-weight: bold">
-                                  @if($currency == "EGP")
-                                {{ $draft['totalAmount'] }} {{ $currency }}
+                                @if ($currency == 'EGP')
+                                    {{ $draft['totalAmount'] }} {{ $currency }}
                                 @else
-                                {{ $currency }}
-                                {{ number_format((float)$draft['totalAmount'] / $foriegnCurrencyExchangeRate , 2, '.', '') }} {{ $currency }}
+                                    {{ $currency }}
+                                    {{ number_format((float) $draft['totalAmount'] / $foriegnCurrencyExchangeRate, 2, '.', '') }}
+                                    {{ $currency }}
                                 @endif
 
 
@@ -348,6 +351,12 @@
                     </table>
                     <div class="text-center">
                         <form action="{{ route('sendDraftData', $id) }}" method="post">
+                            <div style="width: 50%;margin:auto">
+
+                                <input type="datetime-local" @bind="@closedPlatform.Start" @bind:format="yyyy-MM-ddTHH:mm"
+                                step="1" class="form-control form-control-sm text-center" name="date"
+                                placeholder="">
+                            </div>
                             @csrf
                             @method('post')
                             @if ($invUuid != null)
