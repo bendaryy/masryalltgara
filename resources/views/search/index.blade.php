@@ -1,5 +1,5 @@
 @php
-   $allCompanies = DB::table('companies2') ->select('name', 'tax_id')
+   $allCompanies = DB::table('companies') ->select('name', 'tax_id')
         ->get();
 @endphp
 

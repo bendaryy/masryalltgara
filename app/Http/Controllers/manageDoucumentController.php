@@ -138,7 +138,7 @@ class manageDoucumentController extends Controller
             ),
             "documentType" => $request->DocumentType,
             "documentTypeVersion" => "1.0",
-            "dateTimeIssued" => $request->date . "T" . date("h:i:s") . "Z",
+            "dateTimeIssued" => $request->date. "Z",
             "taxpayerActivityCode" => $request->taxpayerActivityCode,
             "internalID" => $request->internalId,
             "invoiceLines" => [
@@ -332,7 +332,7 @@ class manageDoucumentController extends Controller
             ),
             "documentType" => $request->DocumentType,
             "documentTypeVersion" => "1.0",
-            "dateTimeIssued" => $request->date . "T" . date("h:i:s") . "Z",
+            "dateTimeIssued" => $request->date. "Z",
             "taxpayerActivityCode" => $request->taxpayerActivityCode,
             "internalID" => $request->internalId,
             "invoiceLines" => [
@@ -527,7 +527,7 @@ class manageDoucumentController extends Controller
             ),
             "documentType" => $request->DocumentType,
             "documentTypeVersion" => "1.0",
-            "dateTimeIssued" => $request->date . "T" . date("h:i:s") . "Z",
+            "dateTimeIssued" => $request->date. "Z",
             "taxpayerActivityCode" => $request->taxpayerActivityCode,
             "internalID" => $request->internalId,
             "invoiceLines" => [
@@ -724,7 +724,7 @@ class manageDoucumentController extends Controller
             ),
             "documentType" => $request->DocumentType,
             "documentTypeVersion" => "1.0",
-            "dateTimeIssued" => $request->date . "T" . date("h:i:s") . "Z",
+            "dateTimeIssued" => $request->date. "Z",
             "taxpayerActivityCode" => $request->taxpayerActivityCode,
             "internalID" => $request->internalId,
             "invoiceLines" => [
@@ -981,7 +981,7 @@ class manageDoucumentController extends Controller
         //     'scope' => 'InvoicingAPI',
         // ]);
         // $token = $response['access_token'];
-        return view('sentofdraft.index', compact('allSent', ));
+        return view('sentofdraft.index', compact('allSent'));
 
     }
 
