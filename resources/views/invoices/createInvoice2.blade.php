@@ -387,16 +387,16 @@
                                                             <input type="text"
                                                                 class="form-control form-control-sm text-center"
                                                                 name="bankAccountNo" placeholder="@lang(" site.Bank Account
-                                                                                                                                                                                                                                                            No")">
+                                                                                                                                                                                                                                                                                                                            No")">
                                                         </div>
 
                                                         <div class="col-md-6">
                                                             <label class="form-label"> @lang("site.Bank Account
-                                                                                                                                                                                                                                                IBAN")</label>
+                                                                                                                                                                                                                                                                                                            IBAN")</label>
                                                             <input type="text"
                                                                 class="form-control form-control-sm text-center"
                                                                 name="bankAccountIBAN" placeholder="@lang(" site.Bank
-                                                                                                                                                                                                                                                            Account IBAN")">
+                                                                                                                                                                                                                                                                                                                            Account IBAN")">
 
                                                         </div>
                                                         <div class="row g-3">
@@ -405,16 +405,16 @@
                                                                 <input type="text"
                                                                     class="form-control form-control-sm text-center"
                                                                     name="swiftCode" placeholder="@lang(" site.Swift
-                                                                                                                                                                                                                                                                            Code")">
+                                                                                                                                                                                                                                                                                                                                                Code")">
                                                             </div>
 
                                                             <div class="col-md-6">
                                                                 <label class="form-label"> @lang("site.Payment
-                                                                                                                                                                                                                                                                Terms")</label>
+                                                                                                                                                                                                                                                                                                                                Terms")</label>
                                                                 <input type="text"
                                                                     class="form-control form-control-sm text-center"
                                                                     name="Bankterms" placeholder="@lang(" site.Payment
-                                                                                                                                                                                                                                                                            Terms")">
+                                                                                                                                                                                                                                                                                                                                                Terms")">
 
                                                             </div>
 
@@ -528,7 +528,7 @@
 
                                                             <select name="t1subtype[]" required id="t1subtype"
                                                                 class="form-control form-control-sm single-select">
-
+                                                                <option value="V009">سلع عامة</option>
                                                                 @foreach ($taxTypes as $type)
                                                                     @if ($type->parent === 'T1')
                                                                         <option value="{{ $type->code }}"
@@ -579,7 +579,7 @@
 
                                                             <input class="form-control" value="0"
                                                                 placeholder=" @lang("
-                                                                                                                                                                                                                                                            site.Discount")" type="number"
+                                                                                                                                                                                                                                                                                                                            site.Discount")" type="number"
                                                                 step="any" name="discountAmount[]"
                                                                 id="discountAmount" onkeyup="bigOne()"
                                                                 onmouseover="bigOne()">
@@ -592,7 +592,7 @@
                                                                 step="any" name="itemsDiscount[]" id="itemsDiscount"
                                                                 onkeyup="bigOne()" onmouseover="bigOne()"
                                                                 placeholder="@lang("
-                                                                                                                                                                                                                                                            site.Discount_After_Tax")">
+                                                                                                                                                                                                                                                                                                                            site.Discount_After_Tax")">
                                                         </div>
                                                     </div>
                                                 </div></BR>
@@ -607,7 +607,7 @@
                                                                     step="any" name="t2Amount[]" id="t2"
                                                                     onkeyup="bigOne()" onmouseover="bigOne()"
                                                                     placeholder="@lang(" site.Total
-                                                                                                                                                                                                                                                                            Taxable Fees")">
+                                                                                                                                                                                                                                                                                                                                                Taxable Fees")">
                                                             </div>
                                                             <div class="col-md-6">
                                                                 <label for="Totalt4Amount" class="form-label">اجمالى
@@ -617,7 +617,7 @@
                                                                     onkeyup="bigOne()bigOne()"
                                                                     onmouseover="bigOne()bigOne()"
                                                                     placeholder="@lang("
-                                                                                                                                                                                                                                                                            site.Total T4 Amount")">
+                                                                                                                                                                                                                                                                                                                                                site.Total T4 Amount")">
                                                             </div>
                                                         </div>
                                                         <div class="row g-3">
@@ -647,7 +647,7 @@
                                                                     id="totalItemsDiscount" onkeyup="bigOne()"
                                                                     onmouseover="bigOne()"
                                                                     placeholder="@lang("
-                                                                                                                                                                                                                                                                            site.lineTotal")">
+                                                                                                                                                                                                                                                                                                                                                site.lineTotal")">
                                                             </div>
                                                         </div>
 
@@ -841,6 +841,7 @@
                                     <div class="col-md-6">
                                         <label for="inputProductTitle" class="form-label">@lang('site.Tax added Type')</label>
                                         <select name="t1subtype[]" required id="t1subtype" class="form-control form-control-sm single-select">
+                                        <option value="V009">سلع عامة</option>
                                             @foreach ($taxTypes as $type)
                                                 @if ($type->parent === 'T1')
                                                     <option value="{{ $type->code }}" style="font-size: 15px;width: 100px;">
@@ -901,7 +902,7 @@
                                             <label for="TotalTaxableFees" class="form-label">@lang('site.Total Taxable Fees')</label>
                                             <input type="number" readonly class="form-control" step="any" name="t2Amount[]" id="t2${i}"
                                                 onkeyup="bigOne${i}(),bigOne();" onmouseove="bigOne${i}(),bigOne();" placeholder="@lang(" site.Total
-                                                                                                                                                                                                Taxable Fees")">
+                                                                                                                                                                                                                                                Taxable Fees")">
                                         </div>
                                         <div class="col-md-6">
                                             <label for="Totalt4Amount" class="form-label">@lang('site.Totalt4Amount')</label>
