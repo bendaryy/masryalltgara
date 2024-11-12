@@ -1,2 +1,2 @@
-C:\laragon\www\tasheed\EInvoicing\publish/EInvoicingSigner.exe  C:\laragon\www\tasheed\EInvoicing 34913922 "Egypt Trust CA G6"
+C:\laragon\www\tasheed\EInvoicing\publish/EInvoicingSigner.exe  C:\laragon\www\tasheed\EInvoicing 56666111 "MCDR CA 2022"
 PAUSE
