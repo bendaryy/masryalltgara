@@ -5,6 +5,7 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use App\Models\Apisetting;
 use App\Models\Company;
+use Illuminate\Pagination\Paginator;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -27,5 +28,6 @@ class AppServiceProvider extends ServiceProvider
     {
         // view()->share('setting', Apisetting::first());
         // view()->share('company', Company::first());
+        Paginator::useBootstrap();
     }
 }

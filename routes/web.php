@@ -22,7 +22,8 @@ Route::group(
     [
         'prefix' => LaravelLocalization::setLocale(),
         'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath'],
-    ], function () {
+    ],
+    function () {
 
         Auth::routes(['register' => false]);
 
@@ -60,19 +61,19 @@ Route::group(
 
             Route::post('getcategory', [category::class, 'getcategory'])->name('getcategory');
 
-// Imports
+            // Imports
 
             Route::get('import', [import::class, 'index'])->name('import');
 
             Route::post('categoryimport', [import::class, 'categoryimport'])->name('categoryimport');
 
-// Portal
+            // Portal
 
             Route::get('notifications', [main::class, 'notifications'])->name('notifications');
 
             Route::get('connection', [main::class, 'index'])->name('connection');
 
-// Document
+            // Document
 
             Route::resource('document', document::class);
 
@@ -94,7 +95,7 @@ Route::group(
 
             Route::get('submitorder/{id}', [document::class, 'submitorder'])->name('submitorder');
 
-// Seeds
+            // Seeds
 
             Route::get('taxx', [main::class, 'taxx'])->name('taxx');
 
@@ -109,7 +110,7 @@ Route::group(
 
             // Route::get('allInvoices/{id}', [manageDoucumentController::class, 'allInvoices'])->name('allinvoices')->middleware('auth');
 
-// all invoice status
+            // all invoice status
 
             Route::get('sentInvoices/{id}', [manageDoucumentController::class, 'sentInvoices'])->name('sentInvoices')->middleware('auth');
             Route::get('receivedInvoices/{id}', [manageDoucumentController::class, 'receivedInvoices'])->name('receivedInvoices')->middleware('auth');
@@ -120,22 +121,25 @@ Route::group(
             Route::get('testInvoice', [manageDoucumentController::class, 'createInvoice3'])->name('createInvoice3')->middleware('auth');
             Route::get('testInvoice/test2', [manageDoucumentController::class, 'createInvoice4'])->name('createInvoice4')->middleware('auth');
 
-// send invoice
+            // send invoice
             Route::post('storeInvoice', [manageDoucumentController::class, 'invoice'])->name('storeInvoice')->middleware('auth');
+            Route::post('updateinvoice/{id}', [manageDoucumentController::class, 'updateInvoice'])->name('updateInvoice')->middleware('auth');
+            Route::get('editinvoice/{id}', [manageDoucumentController::class, 'editInvoice'])->name('editinvoice')->middleware('auth');
+            Route::get('editsentinvoice/{id}', [manageDoucumentController::class, 'editSentInvoice'])->name('editsentinvoice')->middleware('auth');
             Route::post('storeInvoiceDollar', [manageDoucumentController::class, 'invoiceDollar'])->name('storeInvoiceDollar')->middleware('auth');
 
-//signature
+            //signature
             Route::get('cer', [manageDoucumentController::class, 'openBat'])->name('cer')->middleware('auth');
 
-// show pdf
+            // show pdf
 
             Route::get('showPdf/{uuid}', [manageDoucumentController::class, 'showPdfInvoice'])->name('pdf')->middleware('auth');
             Route::get('showPdfEnglish/{uuid}', [manageDoucumentController::class, 'showPdfInvoiceEnglish'])->name('pdfEnglish')->middleware('auth');
 
-// for cancel sent invoices
+            // for cancel sent invoices
             Route::put('cancelDocument/{uuid}', [manageDoucumentController::class, 'cancelDocument'])->name('cancelDocument')->middleware('auth');
 
-// for reject recived invoices
+            // for reject recived invoices
             Route::put('rejectDocument/{uuid}', [manageDoucumentController::class, 'RejectDocument'])->name('RejectDocument')->middleware('auth');
             Route::get('pending', [products::class, 'pending'])->name('pending')->middleware('auth');
 
@@ -171,10 +175,9 @@ Route::group(
             Route::get('searchAll', function () {
                 return view('invoices.allinvoices');
             })->name('searchAll');
-
         });
-
-    });
+    }
+);
 
 // get company api
 Route::get('getcompany/{id}', [CustomerController::class, 'getCompany'])->name('getCompany')->middleware('auth');
@@ -197,5 +200,5 @@ route::get('showsentdetails/{uuid}', [manageDoucumentController::class, 'showSen
 route::delete('deletesent/{id}', [manageDoucumentController::class, 'deleteSentInv'])->name('deleteSentInv')->middleware('auth');
 // add egs product
 
-route::post('addegsproduct',[products::class,'StoreProduct'])->name('createProduct')->middleware('auth');
-route::get('addegs',[products::class,'createProduct'])->name('addegs')->middleware('auth');
+route::post('addegsproduct', [products::class, 'StoreProduct'])->name('createProduct')->middleware('auth');
+route::get('addegs', [products::class, 'createProduct'])->name('addegs')->middleware('auth');
