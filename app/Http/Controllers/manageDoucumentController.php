@@ -802,27 +802,27 @@ class manageDoucumentController extends Controller
                 ],
 
             ];
-            if (floatval($request->t4rate[$i]) > 0) {
+            if (!empty($request->t4rate[$i]) && floatval($request->t4rate[$i]) > 0) {
                 $newArray = [
-
                     "taxType" => "T4",
-                    "amount" => floatval($request->t4Amount[$i]),
-                    "subType" => ($request->t4subtype[$i]),
+                    "amount" => !empty($request->t4Amount[$i]) ? floatval($request->t4Amount[$i]) : 0.0,
+                    "subType" => $request->t4subtype[$i] ?? null,
                     "rate" => floatval($request->t4rate[$i]),
                 ];
 
                 array_push($Data['taxableItems'], $newArray);
             }
 
-            if (floatval($request->rate[$i]) > 0) {
+            if (!empty($request->rate[$i]) && floatval($request->rate[$i]) > 0) {
                 $newArray2 = [
                     "taxType" => "T1",
-                    "amount" => floatval($request->t2Amount[$i]),
-                    "subType" => ($request->t1subtype[$i]),
+                    "amount" => !empty($request->t2Amount[$i]) ? floatval($request->t2Amount[$i]) : 0.0,
+                    "subType" => $request->t1subtype[$i] ?? null,
                     "rate" => floatval($request->rate[$i]),
                 ];
                 array_push($Data['taxableItems'], $newArray2);
             }
+
 
             // send data to invoiceLines
             $invoice['invoiceLines'][$i] = $Data;
