@@ -709,7 +709,7 @@ class manageDoucumentController extends Controller
             'rate' => 'required',
             'invoiceDescription' => 'required',
             'itemCode' => 'required',
-            't4subtype' => 'required',
+            // 't4subtype' => 'required',
             't1subtype' => 'required',
 
         ]);
