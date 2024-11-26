@@ -603,48 +603,69 @@
                                                 </div>
                                                 @endif
                                                 <div class="row g-3">
-                                                    @if (!collect($line['taxableItems'])->contains('taxType', 'T4'))
-                                                    @else
+                                                    @php
+                                                    $t4Found = collect($line['taxableItems'])->contains('taxType',
+                                                    'T4');
+                                                    @endphp
+
                                                     <div class="col-md-6">
                                                         <label for="inputProductTitle"
                                                             class="form-label">@lang('site.Tax t4 Type')</label>
                                                         <select name="t4subtype[]" required id="t4subtype{{ $key + 1 }}"
                                                             class="form-control form-control-sm single-select">
+                                                            @if ($t4Found)
                                                             @foreach ($line['taxableItems'] as $taxItem)
-                                                            @foreach ($taxTypes as $type)
                                                             @if ($taxItem['taxType'] == 'T4')
-                                                            {{-- Your code here --}}
-                                                            {{-- <h1>{{ $taxItem['subType'] }}</h1> --}}
+                                                            @foreach ($taxTypes as $type)
                                                             @if ($type->parent === 'T4')
                                                             <option value="{{ $type->code }}" {{ $type->code ==
                                                                 $taxItem['subType'] ? 'selected' : '' }}
                                                                 style="font-size: 15px;width: 100px;">
                                                                 {{ $type->name_ar }}
-                                                                @endif
-                                                                @endif
-                                                                @endforeach
-                                                                @endforeach
+                                                            </option>
+                                                            @endif
+                                                            @endforeach
+                                                            @endif
+                                                            @endforeach
+                                                            @else
+                                                            @foreach ($taxTypes as $type)
+                                                            @if ($type->parent === 'T4')
+                                                            <option value="W002" style="font-size: 15px;width: 100px;">
+                                                                التوريدات</option>
+                                                            <option value="{{ $type->code }}"
+                                                                style="font-size: 15px;width: 100px;">
+                                                                {{ $type->name_ar }}
+                                                            </option>
+                                                            @endif
+                                                            @endforeach
+                                                            @endif
                                                         </select>
                                                     </div>
-
 
                                                     <div class="col-md-6">
                                                         <label for="lineTaxT4" class="form-label">قيمة ضريبة
                                                             المنبع</label>
+                                                        @if ($t4Found)
                                                         @foreach ($line['taxableItems'] as $taxItem)
                                                         @if ($taxItem['taxType'] == 'T4')
                                                         <input value="{{ $taxItem['rate'] }}" type="number"
                                                             class="form-control" name="t4rate[]"
                                                             id="t4rate{{ $key + 1 }}"
-                                                            class="form-control form-control-sm"
                                                             onkeyup="calculateTotals({{ $key + 1 }}),bigOne()"
                                                             onmouseover="calculateTotals({{ $key + 1 }}),bigOne()"
                                                             placeholder="نسبة ضريبة المنبع">
                                                         @endif
                                                         @endforeach
+                                                        @else
+                                                        <input value="0" type="number" class="form-control"
+                                                            name="t4rate[]" id="t4rate{{ $key + 1 }}"
+                                                            onkeyup="calculateTotals({{ $key + 1 }}),bigOne()"
+                                                            onmouseover="calculateTotals({{ $key + 1 }}),bigOne()"
+                                                            placeholder="نسبة ضريبة المنبع">
+                                                        @endif
                                                     </div>
-                                                    @endif
                                                 </div>
+
                                                 <div class="row g-3 mt-1">
                                                     <div class="col-md-6">
                                                         <label for="lineDiscount" class="form-label">الخصم</label>
@@ -691,18 +712,25 @@
                                                             <div class="col-md-6">
                                                                 <label for="Totalt4Amount" class="form-label">اجمالى
                                                                     ضريبة المنبع</label>
-                                                                @foreach ($line['taxableItems'] as $taxTotal)
-                                                                @if ($taxTotal['taxType'] == 'T4')
+                                                                @php
+                                                                $t4TaxAmount = null;
+                                                                foreach ($line['taxableItems'] as $taxTotal) {
+                                                                if ($taxTotal['taxType'] == 'T4') {
+                                                                $t4TaxAmount = $taxTotal['amount'];
+                                                                break;
+                                                                }
+                                                                }
+                                                                @endphp
+
                                                                 <input type="number" class="form-control"
                                                                     name="t4Amount[]" readonly
                                                                     id="t4Amount{{ $key + 1 }}"
                                                                     onkeyup="calculateTotals({{ $key + 1 }}),bigOne()"
                                                                     onmouseover="calculateTotals({{ $key + 1 }}),bigOne()"
-                                                                    value="{{ $taxTotal['amount'] }}"
+                                                                    value="{{ $t4TaxAmount ?? 0 }}"
                                                                     placeholder="@lang('site.Total T4 Amount')">
-                                                                @endif
-                                                                @endforeach
                                                             </div>
+
                                                         </div>
                                                         <div class="row g-3">
                                                             <div class="col-md-6">
@@ -782,19 +810,23 @@
                                         @endforeach
                                     </div>
                                     @endif
-                                    @if (collect($DataOfJson['taxTotals'])->contains('taxType', 'T4'))
                                     <div class="col-md-6">
-                                        <label for="findTotalt4Amount" class="form-label">إجمالى ضريبة
-                                            المنبع</label>
-                                        @foreach ($DataOfJson['taxTotals'] as $totalTax)
-                                        @if ($totalTax['taxType'] == 'T4')
+                                        <label for="findTotalt4Amount" class="form-label">إجمالى ضريبة المنبع</label>
+                                        @php
+                                        $t4TaxAmount = null;
+                                        foreach ($DataOfJson['taxTotals'] as $totalTax) {
+                                        if ($totalTax['taxType'] == 'T4') {
+                                        $t4TaxAmount = $totalTax['amount'];
+                                        break;
+                                        }
+                                        }
+                                        @endphp
+
                                         <input class="form-control" type="number" step="any" name="totalt4Amount"
-                                            value="{{ $totalTax['amount'] }}" onmouseover="bigOne()" onkeyup="bigOne()"
+                                            value="{{ $t4TaxAmount ?? 0 }}" onmouseover="bigOne()" onkeyup="bigOne()"
                                             readonly id="totalt4Amount">
-                                        @endif
-                                        @endforeach
                                     </div>
-                                    @endif
+
                                     <div class="col-md-6">
                                         <label for="salesTotal" class="form-label">إجمالى الخصم</label>
                                         <input type="number" class="form-control"
